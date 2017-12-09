@@ -22,76 +22,67 @@ class Nodo_heap(object):
     def __repr__(self):
         return str(self.dato)    
 
-class vertice(object): #no entendi esta clase xD
+'''class vertice(object):
 	def __init__(self,id):
 		self.id = id
-		self.adyacentes = {}
+		self.adyacentes = {}'''
 
-class Grafo(object):    
+class Grafo(object):
+    
     def __init__(self):
         self.cant_vertices = 0
+        self.cant_aristas = 0
         self.vertices = {}
-    
+    #funciones auxiliares
     def vertice_pertenece(self,vertice):
-		return vertice in self.vertices  # no seria mejor asi ??
-	"""	
-        if self.vertices.has_key(vertice): #que hace hash_key ??
-        	return True
-        else:
-        	return False
-            """
-    def agregar_vertice(self,identificador):
-    	if not self.vertice_pertenece(identificador): 	
+        return vertice in self.vertices
+
+    def cantidad_vertices(self):
+        return self.cant_vertices
+
+    def cantidad_aristas(self):
+        return self.cant_aristas
+    #primitiva vertice        
+    def agregar_vertice(self,vertice):
+    	if not self.vertice_pertenece(vertice):	
     		self.cant_vertices += 1
-        	self.vertices[identificador] = vertice(identificador)
-		# y si existe ?
-		
-    def borrar_vertice(self,identificador):
+        	self.vertices[vertice] = {}
+
+    def quitar_vertice(self,vertice):
     	self.cant_vertices -= 1
-    	self.vertices.pop(identificador)
-    	for v in self.vertices:
-    		self.vertices[v].adyacentes.pop(identificador)
+    	self.vertices.pop(vertice)
+    	
 
     def obtener_vertices(self):
-    	return self.vertices.keys()
+    	return self.vertices
 
-    def son_adyacente(self,identificador,adyacente):
-        if !self.vertice_pertenece(identificador) return false
-		aux = self.vertice[identificador)
-		retun adyacente in aux.adyacentes
-	"""
-		if self.vertice_pertenece(identificador):
-        	aux = self.vertices[identificador]
-        	if aux.adyacentes.has_key(adyacente):
-        		return True
-        	else:
-        		return False
-        else:
-        	return False
-	"""
-    def cantidad_vertices(self):
-    	return self.cant_vertices
+    def adyacentes_vertice(self,vertice):
+        return self.vertices[vertice] 
 
-    def agregar_arista(self,id1,id2):
-    	aux2 = self.vertices.get(id2)
-		aux1 = self.vertices.get(id1)
-		
-		self.vertices[id1].adyacentes[id2] = aux2
-		self.vertices[id2].adyacentes[id1] = aux1
-"""						   
-    	dic = {id2:aux}
-    	self.vertices[id1].adyacentes.update(dic) 
-    	aux = self.vertices.get(id1)
-    	dic = {id1:aux}
-    	self.vertices[id2].adyacentes.update(dic)
-"""
-    def borrar_arista(self,id1,id2):
-    	self.vertices[id1].adyacentes.pop(id2, None)
-    	self.vertices[id2].adyacentes.pop(id1, None)
-					   
-    def obtener_adyacentes(self,id): # esto obtiene las aristas ??
-		if not vertice_pertenece(id): return None
-    	return self.vertices[id].adyacentes      
+    def son_adyacente(self,vertice,adyacente):
+        if not self.vertice_pertenece(vertice):
+            return false
+        return adyacente in self.vertices[vertice]
+
+    #primitivas arista
+    def agregar_arista(self,arista,vertice1,vertice2):
+    	if not self.son_adyacente(vertice1,vertice2):
+            self.vertices[vertice1][vertice2] = [arista]
+            self.vertices[vertice2][vertice1] = [arista]
+            self.cant_aristas += 1
+            return 
+        self.vertices[vertice1][vertice2].append(arista)
+        self.vertices[vertice2][vertice1].append(arista)
+        return
+        
+
+    def quitar_arista(self,vertice1,vertice2):
+    	del self.vertices[vertice1][vertice2]
+    	del self.vertices[vertice2][vertice1]    
+
 
     def __iter__(self):
         return iter(self.vertices)  
+
+
+
