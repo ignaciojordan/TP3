@@ -53,7 +53,7 @@ with open(sys.argv[1], "r") as archivo:
 			youtube.agregar_arista(id1,id2)
 		auxiliar += 1
 
-linea=raw_input("Ingrese comando:")
+linea=raw_input("Ingrese comandoXxxdd:")
 while (cmp(linea,"fin") != 0):
 	comando = linea.split(' ',1)
 	print comando
